@@ -36,4 +36,4 @@ while True:
             cv2.rectangle(image,(x,y),(x+w,y+h),(255,255,0),2)
 
         #Save the result image
-        cv2.imwrite('result_{0}.jpg'.format(time.time()),image)
+        cv2.imwrite('result_{0}.jpg'.format(time.time()))
