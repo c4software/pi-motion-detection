@@ -58,14 +58,13 @@ while True:
     
     # loop over the contours
     for c in cnts:
-    	print (cv2.contourArea(c))
         # if the contour is too small, ignore it
-        if cv2.contourArea(c) < 12000:
-            continue
-
-        (x, y, w, h) = cv2.boundingRect(c)
-        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
-        rectagleCenterPont = ((x + x + w) /2, (y + y + h) /2)
-        cv2.circle(frame, rectagleCenterPont, 1, (0, 0, 255), 5)
-
-        cv2.imwrite('result_{0}.jpg'.format(time.time()), frame)
+        if cv2.contourArea(c) > 12000:
+            # Draw bound in the image
+            (x, y, w, h) = cv2.boundingRect(c)
+            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+            rectagleCenterPont = ((x + x + w) /2, (y + y + h) /2)
+            cv2.circle(frame, rectagleCenterPont, 1, (0, 0, 255), 5)
+            
+            # Write image to disk (with bound in it)
+            cv2.imwrite('result_{0}.jpg'.format(time.time()), frame)
