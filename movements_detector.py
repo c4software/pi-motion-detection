@@ -33,6 +33,7 @@ camera.rotation = 270
 camera.framerate = 32
 
 firstFrame = None
+movement_detected = 0
 
 while True:
     stream = picamera.array.PiRGBArray(camera)
@@ -68,3 +69,7 @@ while True:
             
             # Write image to disk (with bound in it)
             cv2.imwrite('result_{0}.jpg'.format(time.time()), frame)
+            
+            # Add to counter
+            movement_detected = movement_detected + 1
+            print ("New movement detected {}".format(movement_detected))
