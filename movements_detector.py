@@ -10,7 +10,6 @@ import time
 width = 800
 
 def testIntersectionIn(x, y):
-
     res = -450 * x + 400 * y + 157500
     if((res >= -550) and  (res < 550)):
         print (str(res))
@@ -55,7 +54,10 @@ while True:
     # dilate the thresholded image to fill in holes, then find contours on thresholded image
     thresh = cv2.dilate(thresh, None, iterations=2)
     cnts, hierarchy = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    
+   
+    # After compute update the firstFrame to get only change
+    firstFrame = gray
+ 
     # loop over the contours
     for c in cnts:
         # if the contour is too small, ignore it
