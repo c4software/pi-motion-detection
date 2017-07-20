@@ -18,3 +18,11 @@ Use picamera.array to detect faces. Display Face detected or No Face.
 ## movements_detector.py
 
 Detect movements in the camera feed and take picture.
+
+## image_people_counter.py
+
+Scan for peoples in the given image
+
+```
+$ python image_people_counter.py -i my_image.jpeg
+```
