@@ -38,7 +38,6 @@ movement_detected = 0
 while True:
     stream = picamera.array.PiRGBArray(camera)
     camera.capture(stream, format='bgr')
-    text = "Unoccupied"
 
     # resize the frame, convert it to grayscale, and blur it
     frame = stream.array
@@ -65,7 +64,6 @@ while True:
             (x, y, w, h) = cv2.boundingRect(c)
             cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
             rectagleCenterPont = ((x + x + w) /2, (y + y + h) /2)
-            cv2.circle(frame, rectagleCenterPont, 1, (0, 0, 255), 5)
             
             # Write image to disk (with bound in it)
             cv2.imwrite('result_{0}.jpg'.format(time.time()), frame)
@@ -73,3 +71,5 @@ while True:
             # Add to counter
             movement_detected = movement_detected + 1
             print ("New movement detected {}".format(movement_detected))
+
+print ("Movement detected {}".format(movement_detected))
