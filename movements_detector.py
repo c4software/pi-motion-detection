@@ -7,8 +7,6 @@ import picamera.array
 
 import time
 
-width = 800
-
 def testIntersectionIn(x, y):
     res = -450 * x + 400 * y + 157500
     if((res >= -550) and  (res < 550)):
@@ -27,7 +25,7 @@ def testIntersectionOut(x, y):
     return False
 
 camera = picamera.PiCamera()
-camera.resolution = (800, 608)
+camera.resolution = (1024, 768)
 camera.rotation = 270
 camera.framerate = 32
 
