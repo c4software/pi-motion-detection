@@ -4,8 +4,12 @@ import cv2
 import numpy as np
 import picamera
 import picamera.array
-
+import argparse
 import time
+
+ap = argparse.ArgumentParser()
+ap.add_argument("--keep", help="Keep only image bounds.", action="store_true")
+args = ap.parse_args()
 
 def testIntersectionIn(x, y):
     res = -450 * x + 400 * y + 157500
@@ -56,20 +60,28 @@ while True:
     # After compute update the firstFrame to get only change
     firstFrame = gray
  
+    
+    bounds_item = 0
+    time_shot = time.time()
+
     # loop over the contours
     for c in cnts:
         # if the contour is too small, ignore it
         if cv2.contourArea(c) > 12000:
-            # Draw bound in the image
-            (x, y, w, h) = cv2.boundingRect(c)
-            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
-            rectagleCenterPont = ((x + x + w) /2, (y + y + h) /2)
-            
-            # Write image to disk (with bound in it)
-            cv2.imwrite('result_{0}.jpg'.format(time.time()), frame)
-            
             # Add to counter
-            movement_detected = movement_detected + 1
             print ("New movement detected {}".format(movement_detected))
 
-print ("Movement detected {}".format(movement_detected))
+            # Draw bound in the image
+            (x, y, w, h) = cv2.boundingRect(c)
+            
+            if not args.keep:
+                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                rectagleCenterPont = ((x + x + w) /2, (y + y + h) /2)
+                # Write image to disk (with bound in it)
+                cv2.imwrite('result_{0}.jpg'.format(time_shot), frame)
+            else:
+                # Extract bound
+                cv2.imwrite('bounds_{0}_{1}.jpg'.format(bounds_item, time_shot), frame[y:y+h, x:x+w])
+
+            bounds_item = bounds_item + 1
+            movement_detected = movement_detected + 1
